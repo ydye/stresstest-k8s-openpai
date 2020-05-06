@@ -1,4 +1,4 @@
-from locust import HttpLocust, TaskSet, task
+from locust import HttpLocust, TaskSet, task, between
 
 class HealthZTask(TaskSet):
     @task
@@ -7,4 +7,4 @@ class HealthZTask(TaskSet):
 
 class K8SAgent(HttpLocust):
     task_set = HealthZTask
-    wait_time = 10
+    wait_time = between(10, 10)
