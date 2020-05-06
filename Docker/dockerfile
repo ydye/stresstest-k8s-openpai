@@ -1,0 +1,6 @@
+FROM locustio/locust
+
+ENV PROJECT_DIR /src/script
+
+RUN mkdir -p ${PROJECT_DIR}
+COPY ./test ${PROJECT_DIR}
