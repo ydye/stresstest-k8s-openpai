@@ -1,4 +1,4 @@
-from locust import HttpLocust, TaskSet
+from locust import HttpLocust, TaskSet, task
 
 class HealthZTask(TaskSet):
     @task
