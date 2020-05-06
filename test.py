@@ -1,13 +1,10 @@
-import argparse
-from locust import HttpLocust, TaskSet, between
+from locust import HttpLocust, TaskSet
 
 class HealthZTask(TaskSet):
     @task
     def nginxHeartBeat(self):
-        None
+       self.client.get("/healthz", catch_response=True)
 
-class StressTest(HttpLocust):
+class K8SAgent(HttpLocust):
     task_set = HealthZTask
-
-
-
+    wait_time = 10
