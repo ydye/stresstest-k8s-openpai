@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: locust-master
+spec:
+  selector:
+    matchLabels:
+      app: locust-master
+  template:
+    metadata:
+      labels:
+        app: locust-master
+    spec:
+      containers:
+        - name:  openpai-locust
+          image: albafica/openpai-locust
+          imagePullPolicy: Always
+          command:
+            - "locust"
+            - "-H"
+            - "${TARGET_URL}"
+            - "-f"
+            - "/src/stresstest/${SCRIPT_NAME}"
+            - "--master"
+          ports:
+            - name: master-port
+              containerPort: 8089
+              hostPort: 8089
+          env:
+            - name: MASTER_URL
+              value: ${MASTER_URL}
+            - name: TARGET_URL
+              value: ${TARGET_URL}
+            - name: SCRIPT_NAME
+              value: ${SCRIPT_NAME}

@@ -22,7 +22,3 @@ locust -H https://x.x.x.x -f test/healthz.py
 sudo docker build -t stress-openpai -f docker/dockerfile .
 ```
 
-```angular2
-docker run --volume $PWD/dir/of/locustfile:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://abc.com -e LOCUST_OPTS="--clients=10 --no-web --run-time=600" locustio/locust
-
-```
