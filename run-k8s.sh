@@ -12,7 +12,7 @@ while getopts "w:m:c:" opt; do
   esac
 done
 
-echo "cluster config file path: ${CLUSTER_CONFIG}"
+echo "config file path: ${CLUSTER_CONFIG}"
 
 
 python3 stresstest-generator.py -c ${CLUSTER_CONFIG}

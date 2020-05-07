@@ -14,7 +14,7 @@ sudo pip3 install locust
 locust -H https://x.x.x.x -f test/healthz.py
 ```
 
-### K8S
+### Distributed mode in K8S
 
 #### Setup env
 
@@ -32,9 +32,26 @@ master-url: x.x.x.x
 stress-test-script: xxxxx
 ```
 
-#### Start stresstest on 
+#### Label k8s node with master and slave
 
-```angular2
+- master node
 
 ```
+kubectl label nodes <node-name> locust-role=master 
+```
 
+- slave node
+
+```
+kubectl label nodes <node1-name> locust-role=slave
+
+...
+
+kubectl label nodes <nodeX-name> locust-role=slave
+```
+
+#### Start stresstest on kubernetes
+
+```bash
+./run-k8s.sh -c ${path-to-config}
+```
