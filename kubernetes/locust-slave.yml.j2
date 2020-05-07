@@ -22,14 +22,22 @@ spec:
                       - slave
       containers:
       - name:  openpai-locust
-        image: albafica/openpai-locust
+        image: locustio/locust
         imagePullPolicy: Always
-        command:
-        - "locust"
-        - "-H"
-        - "{{ env['cfg']['target-url'] }}"
-        - "-f"
-        - "/src/stresstest/{{ env['cfg']['stress-test-script'] }}"
-        - "--slave"
-        - "--master-host"
-        - "{{ env['cfg']['master-url'] }}"
+        volumeMounts:
+          - mountPath: /mnt/locust
+            name: locust-script
+        env:
+          - name: LOCUST_MODE
+            value: "slave"
+          - name: LOCUSTFILE_PATH
+            value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
+          - name: TARGET_URL
+            value: "{{ env['cfg']['target-url'] }}"
+          - name: LOCUST_MASTER_HOST
+            value: "{{ env['cfg']['master-url'] }}"
+      volumes:
+      - name: locust-script
+        configMap:
+          name: locust-script-configuration
+

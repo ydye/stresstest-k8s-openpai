@@ -1,6 +1,0 @@
-FROM locustio/locust
-
-ENV PROJECT_DIR /src/stresstest
-
-RUN mkdir -p ${PROJECT_DIR}
-COPY ./test ${PROJECT_DIR}

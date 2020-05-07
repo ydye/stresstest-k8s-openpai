@@ -22,12 +22,6 @@ locust -H https://x.x.x.x -f test/healthz.py
 
 ```
 
-#### build
-
-```bash
-sudo docker build -t stress-openpai -f docker/dockerfile .
-```
-
 #### Prepare configurationfile and save as yml
 ```
 target-url: x.x.x.x

@@ -22,16 +22,25 @@ spec:
                       - master
       containers:
         - name:  openpai-locust
-          image: albafica/openpai-locust
+          image: locustio/locust
           imagePullPolicy: Always
-          command:
-            - "locust"
-            - "-H"
-            - "{{ env['cfg']['target-url'] }}"
-            - "-f"
-            - "/src/stresstest/{{ env['cfg']['stress-test-script'] }}"
-            - "--master"
+          volumeMounts:
+            - mountPath: /mnt/locust
+              name: locust-script
           ports:
             - name: master-port
               containerPort: 8089
               hostPort: 8089
+          env:
+            - name: LOCUST_MODE
+              value: "master"
+            - name: LOCUSTFILE_PATH
+              value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
+            - name: TARGET_URL
+              value: "{{ env['cfg']['target-url'] }}"
+      volumes:
+      - name: locust-script
+        configMap:
+          name: locust-script-configuration
+
+
