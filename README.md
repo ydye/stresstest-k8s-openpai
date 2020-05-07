@@ -18,11 +18,12 @@ locust -H https://x.x.x.x -f test/healthz.py
 
 #### Setup env
 
-```angular2
-
+```bash
+sudo pip3 install -r requirements.txt
 ```
 
 #### Prepare configurationfile and save as yml
+
 ```
 target-url: x.x.x.x
 
@@ -31,7 +32,8 @@ master-url: x.x.x.x
 stress-test-script: xxxxx
 ```
 
-#### Generate kubernetes yaml file
+#### Start stresstest on 
+
 ```angular2
 
 ```
