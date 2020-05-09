@@ -6,13 +6,23 @@
 
 ```
 sudo pip3 install locust
+
+sudo apt-get update
+sudo apt-get install parallel
 ```
 
-#### Test healthz stress test
+#### Start master
 
 ```
-locust -H https://x.x.x.x -f test/healthz.py
+locust -H https://x.x.x.x -f test/healthz.py --master
 ```
+
+#### start 20 slave
+
+```
+printf 'locust -H https://int.openpai.org/ -f test/healthz.py --slave\n%.0s' {1..20} | parallel
+```
+
 
 ### Distributed mode in K8S
 
