@@ -1,6 +1,5 @@
 FROM locustio/locust
 
-RUN apt-get update -y && \
-    pip3 install jinja2 pyyaml
+RUN pip3 install jinja2 pyyaml
 
 
