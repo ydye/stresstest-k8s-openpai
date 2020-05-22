@@ -28,12 +28,16 @@ spec:
           - mountPath: /mnt/locust
             name: locust-script
         env:
+          - name: PAI_USER
+            value: "{{ env['cfg']['pai-user'] }}"
+          - name: PAI_PASSWORD
+            value: "{{ env['cfg']['pai-password'] }}"
           - name: LOCUST_MODE
             value: "slave"
           - name: LOCUSTFILE_PATH
             value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
-          #- name: TARGET_URL
-          #  value: "{{ env['cfg']['target-url'] }}"
+          - name: TARGET_URL
+            value: "{{ env['cfg']['target-url'] }}"
           - name: LOCUST_MASTER_HOST
             value: "{{ env['cfg']['master-url'] }}"
       volumes:
