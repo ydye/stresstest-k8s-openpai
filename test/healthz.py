@@ -102,9 +102,9 @@ class HealthZTask(TaskSet):
             headers=openpai_headers
         )
 
-    @task(1)
-    def getPodList(self):
-        self.client.get("/api/v1/pods", verify = self.kube_cert, headers = self.k8s_headers)
+    #@task(1)
+    #def getPodList(self):
+    #    self.client.get("/api/v1/pods", verify = self.kube_cert, headers = self.k8s_headers)
 
     #@task
     #def getNodeList(self):
