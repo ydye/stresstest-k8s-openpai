@@ -37,7 +37,6 @@ class HealthZTask(TaskSet):
 
     kube_token = None
     kube_cert = None
-    headers = {}
     id = 0
 
     def setup(self):
@@ -61,7 +60,7 @@ class HealthZTask(TaskSet):
 
         self.job_template = read_template("/mnt/locust/test-job.yml")
 
-    @task(5)
+    @task(1)
     def submitjob(self):
         hostname = socket.gethostbyname()
         jobname = "stresstest-{0}-{1}".format(hostname, self.id)
@@ -92,9 +91,20 @@ class HealthZTask(TaskSet):
             headers=openpai_headers
         )
 
-    #@task
-    #def getPodList(self):
-    #    self.client.get("/api/v1/pods", verify = self.kube_cert, headers = self.headers)
+
+    @task(1)
+    def listjoball(self):
+        openpai_headers = {
+            "Authorization": "Bearer {0}".format(self.pai_token),
+        }
+        self.client.get(
+            "/rest-server/api/v2/job",
+            headers=openpai_headers
+        )
+
+    @task(1)
+    def getPodList(self):
+        self.client.get("/api/v1/pods", verify = self.kube_cert, headers = self.k8s_headers)
 
     #@task
     #def getNodeList(self):
@@ -103,5 +113,5 @@ class HealthZTask(TaskSet):
 
 class K8SAgent(HttpLocust):
     task_set = HealthZTask
-    wait_time = between(1, 10)
+    wait_time = between(60, 60)
 

@@ -55,36 +55,47 @@ def generate_template_file(template_file_path, output_path, map_table):
     write_generated_file(output_path, generated_template)
 
 
+def get_token(user, password, url):
+    payload = {
+        'username': user,
+        'password': password,
+    }
+    r = requests.post("{0}/rest-server/api/v2/authn/basic/login".format(url), data=payload)
+    return r.json()['token']
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', '--user', dest="user", required=True,
                         help="openpai-user")
     parser.add_argument('-p', '--password', dest="password", required=True,
                         help="openpai-password")
-    parser.add_argument('-j', '--job-file', dest="job", required=True,
+    parser.add_argument('-j', '--job-file-template', dest="job", required=True,
                         help="openpai job path")
+    parser.add_argument('-n', '--job-name', dest="name", required=True, help="jobname prefix")
     parser.add_argument('-m', '--number', dest="number", required=True,
                         help="openpai job number to start")
+    parser.add_argument('-u', '--pai-user', dest="url", required=True, help="pai url")
     args = parser.parse_args()
-    output_path = os.path.expanduser(args.output)
 
-    environment = {
-        'cfg': load_yaml_config(args.configuration),
-    }
-    map_table = {
-        "env": environment
-    }
-    generate_template_file(
-        "kubernetes/locust-master.yml.j2",
-        "{0}/locust-master.yml".format(output_path),
-        map_table
-    )
-    generate_template_file(
-        "kubernetes/locust-slave.yml.j2",
-        "{0}/locust-slave.yml".format(output_path),
-        map_table
-    )
+    job = os.path.expanduser(args.job)
+    prefix = args.name
+    number = args.number
+    user = args.user
+    password = args.password
+    url = args.url
 
+    token = get_token(user, password, url)
+    openpai_headers = {
+        "Authorization": "Bearer {0}".format(token),
+        "Content-Type": "text/yaml"
+    }
+
+    job_template = read_template(job)
+    for i in range(number):
+        logger.info("Submit job {0}-{1}".format(prefix, i))
+        template_data = generate_from_template_dict(job_template, "{0}-{1}".format(prefix, i))
+        res = requests.post("{0}/rest-server/api/v2/job".format(url), headers=openpai_headers, data=template_data)
 
 if __name__ == "__main__":
     main()
