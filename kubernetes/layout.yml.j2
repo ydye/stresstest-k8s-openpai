@@ -1,0 +1,7 @@
+{% for id in range(150) %}
+- hostname: {{ nodename }}-{{id}}
+  nodename: {{ nodename }}-{{id}}
+  hostip: 192.168.{{ipsub3}}.{{id+1}}
+  machine-type: GENERIC-WORKER
+  pai-worker: "true"
+{% endfor %}
