@@ -10,8 +10,8 @@ spec:
     metadata:
       labels:
         app: locust-slaver
-    hostNetwork: true
     spec:
+      hostNetwork: true
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
