@@ -71,6 +71,11 @@ def main():
         "layout.yml",
         map_table
     )
+    generate_template_file(
+        "celladdress.yml.j2",
+        "celladdress.yml",
+        map_table
+    )
 
 if __name__ == "__main__":
     main()
