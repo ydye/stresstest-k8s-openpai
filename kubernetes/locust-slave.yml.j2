@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: locust-slaver
+    hostNetwork: true
     spec:
       affinity:
         nodeAffinity:
@@ -40,6 +41,8 @@ spec:
             value: "{{ env['cfg']['target-url'] }}"
           - name: LOCUST_MASTER_HOST
             value: "{{ env['cfg']['master-url'] }}"
+          - name: LOCUST_MASTER_PORT
+            value: "8089"
       volumes:
       - name: locust-script
         configMap:

@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: locust-master
+    hostNetwork: true
     spec:
       affinity:
         nodeAffinity:
@@ -27,10 +28,6 @@ spec:
           volumeMounts:
             - mountPath: /mnt/locust
               name: locust-script
-          ports:
-            - name: master-port
-              containerPort: 8089
-              hostPort: 8089
           env:
             - name: LOCUST_MODE
               value: "master"
