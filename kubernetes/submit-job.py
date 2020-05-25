@@ -75,7 +75,7 @@ def main():
     parser.add_argument('-n', '--job-name', dest="name", required=True, help="jobname prefix")
     parser.add_argument('-m', '--number', dest="number", required=True,
                         help="openpai job number to start")
-    parser.add_argument('-u', '--pai-user', dest="url", required=True, help="pai url")
+    parser.add_argument('-t', '--pai-user', dest="url", required=True, help="pai url")
     args = parser.parse_args()
 
     job = os.path.expanduser(args.job)
