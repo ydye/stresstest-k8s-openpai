@@ -95,7 +95,7 @@ def main():
     for i in range(number):
         logger.info("Submit job {0}-{1}".format(prefix, i))
         template_data = generate_from_template_dict(job_template, "{0}-{1}".format(prefix, i))
-        res = requests.post("{0}/rest-server/api/v2/job".format(url), headers=openpai_headers, data=template_data)
+        res = requests.post("{0}/rest-server/api/v2/jobs".format(url), headers=openpai_headers, data=template_data)
 
 if __name__ == "__main__":
     main()

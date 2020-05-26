@@ -75,7 +75,7 @@ class HealthZTask(TaskSet):
         }
 
         self.client.post(
-            "/rest-server/api/v2/job",
+            "/rest-server/api/v2/jobs",
             headers=openpai_headers,
             data=template_data
         )
@@ -87,18 +87,7 @@ class HealthZTask(TaskSet):
             "Authorization": "Bearer {0}".format(self.pai_token),
         }
         self.client.get(
-            "/rest-server/api/v2/job",
-            headers=openpai_headers
-        )
-
-
-    @task(1)
-    def listjoball(self):
-        openpai_headers = {
-            "Authorization": "Bearer {0}".format(self.pai_token),
-        }
-        self.client.get(
-            "/rest-server/api/v2/job",
+            "/rest-server/api/v2/jobs",
             headers=openpai_headers
         )
 
