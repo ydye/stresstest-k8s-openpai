@@ -4,6 +4,7 @@ import yaml
 import logging
 import logging.config
 import requests
+import time
 import os
 
 
@@ -96,6 +97,7 @@ def main():
         logger.info("Submit job {0}-{1}".format(prefix, i))
         template_data = generate_from_template_dict(job_template, "{0}-{1}".format(prefix, i))
         res = requests.post("{0}/rest-server/api/v2/jobs".format(url), headers=openpai_headers, data=template_data)
+        time.sleep(1)
 
 if __name__ == "__main__":
     main()
