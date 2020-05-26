@@ -49,7 +49,7 @@ class HealthZTask(TaskSet):
         self.k8s_headers = {
             "Authorization": "Bearer {0}".format(self.kube_token)
         }
-        self.kube_url = "https://{0}".format(_join_host_port(os.environ['SERVICE_HOST_ENV_NAME'], os.environ['SERVICE_PORT_ENV_NAME']))
+        self.kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME], os.environ[SERVICE_PORT_ENV_NAME]))
 
         self.pai_user = os.environ['PAI_USER']
         self.pai_password = os.environ['PAI_PASSWORD']
@@ -68,7 +68,7 @@ class HealthZTask(TaskSet):
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
         jobname = "stresstest-{0}-{1}".format(hostname, self.id)
-        self.id = id + 1
+        self.id = self.id + 1
 
         template_data = generate_from_template_dict(self.job_template, jobname)
 
