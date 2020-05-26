@@ -41,8 +41,6 @@ spec:
             value: "{{ env['cfg']['target-url'] }}"
           - name: LOCUST_MASTER_HOST
             value: "{{ env['cfg']['master-url'] }}"
-          - name: LOCUST_MASTER_PORT
-            value: "8089"
           - name: MY_POD_NAME
             valueFrom:
               fieldRef:
