@@ -64,6 +64,7 @@ class HealthZTask(TaskSet):
 
         self.job_template = read_template("/mnt/locust/test-job.yml")
 
+    '''
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
@@ -83,6 +84,7 @@ class HealthZTask(TaskSet):
             headers=openpai_headers,
             data=template_data
         )
+    '''
 
     @task(10)
     def listjoball(self):
@@ -94,12 +96,13 @@ class HealthZTask(TaskSet):
             headers=openpai_headers
         )
 
+    '''
     @task(10)
     def getPodList(self):
-        self.client.get("{0}{1}".format(self.kube_url + "/api/v1/nodes"), verify = self.kube_cert, headers = self.k8s_headers)
-
+        self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
+    '''
 
 class K8SAgent(HttpLocust):
     task_set = HealthZTask
-    wait_time = between(10, 30)
+    wait_time = between(5, 10)
 
