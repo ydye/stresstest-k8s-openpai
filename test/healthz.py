@@ -21,7 +21,7 @@ def _join_host_port(host, port):
 def read_template(template_path):
 
     with open(template_path, "r") as f:
-        template_data = f.read().decode('utf-8')
+        template_data = f.read()
 
     return template_data
 
@@ -34,9 +34,12 @@ def generate_from_template_dict(template_data, jobname):
     return generated_file
 
 class HealthZTask(TaskSet):
-
+    job_template = None
+    pai_token = None
     kube_token = None
     kube_cert = None
+    kube_url = None
+    k8s_headers = {}
     id = 0
 
     def setup(self):
@@ -46,6 +49,7 @@ class HealthZTask(TaskSet):
         self.k8s_headers = {
             "Authorization": "Bearer {0}".format(self.kube_token)
         }
+        self.kube_url = "https://" + _join_host_port(os.environ['SERVICE_HOST_ENV_NAME'], os.environ['SERVICE_PORT_ENV_NAME'])
 
         self.pai_user = os.environ['PAI_USER']
         self.pai_password = os.environ['PAI_PASSWORD']
@@ -62,7 +66,7 @@ class HealthZTask(TaskSet):
 
     @task(1)
     def submitjob(self):
-        hostname = socket.gethostbyname()
+        hostname = os.environ['MY_POD_NAME']
         jobname = "stresstest-{0}-{1}".format(hostname, self.id)
         self.id = id + 1
 
@@ -81,7 +85,7 @@ class HealthZTask(TaskSet):
         )
 
 
-    @task(1)
+    @task(10)
     def listjoball(self):
         openpai_headers = {
             "Authorization": "Bearer {0}".format(self.pai_token),
@@ -91,9 +95,9 @@ class HealthZTask(TaskSet):
             headers=openpai_headers
         )
 
-    #@task(1)
-    #def getPodList(self):
-    #    self.client.get("/api/v1/pods", verify = self.kube_cert, headers = self.k8s_headers)
+    @task(10)
+    def getPodList(self):
+        self.client.get(self.kube_url, verify = self.kube_cert, headers = self.k8s_headers)
 
     #@task
     #def getNodeList(self):
@@ -102,5 +106,5 @@ class HealthZTask(TaskSet):
 
 class K8SAgent(HttpLocust):
     task_set = HealthZTask
-    wait_time = between(60, 60)
+    wait_time = between(10, 30)
 

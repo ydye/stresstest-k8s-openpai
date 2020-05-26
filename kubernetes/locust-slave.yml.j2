@@ -43,6 +43,10 @@ spec:
             value: "{{ env['cfg']['master-url'] }}"
           - name: LOCUST_MASTER_PORT
             value: "8089"
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
       volumes:
       - name: locust-script
         configMap:

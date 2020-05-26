@@ -39,6 +39,10 @@ spec:
               value: "{{ env['cfg']['pai-password'] }}"
             - name: TARGET_URL
               value: "{{ env['cfg']['target-url'] }}"
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
       volumes:
       - name: locust-script
         configMap:
