@@ -84,7 +84,6 @@ class HealthZTask(TaskSet):
             data=template_data
         )
 
-
     @task(10)
     def listjoball(self):
         openpai_headers = {
@@ -97,11 +96,7 @@ class HealthZTask(TaskSet):
 
     @task(10)
     def getPodList(self):
-        self.client.get(self.kube_url, verify = self.kube_cert, headers = self.k8s_headers)
-
-    #@task
-    #def getNodeList(self):
-    #    self.client.get("/api/v1/nodes", verify = self.kube_cert, headers = self.headers)
+        self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
 
 
 class K8SAgent(HttpLocust):
