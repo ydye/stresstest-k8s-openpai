@@ -42,14 +42,14 @@ class HealthZTask(TaskSet):
     k8s_headers = {}
     id = 0
 
-    def setup(self):
+    def on_start(self):
         with open(SERVICE_TOKEN_FILENAME) as f:
             self.kube_token = f.read()
         self.kube_cert = SERVICE_CERT_FILENAME
         self.k8s_headers = {
             "Authorization": "Bearer {0}".format(self.kube_token)
         }
-        self.kube_url = "https://" + _join_host_port(os.environ['SERVICE_HOST_ENV_NAME'], os.environ['SERVICE_PORT_ENV_NAME'])
+        self.kube_url = "https://{0}".format(_join_host_port(os.environ['SERVICE_HOST_ENV_NAME'], os.environ['SERVICE_PORT_ENV_NAME']))
 
         self.pai_user = os.environ['PAI_USER']
         self.pai_password = os.environ['PAI_PASSWORD']
@@ -96,7 +96,7 @@ class HealthZTask(TaskSet):
 
     @task(10)
     def getPodList(self):
-        self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
+        self.client.get("{0}{1}".format(self.kube_url + "/api/v1/nodes"), verify = self.kube_cert, headers = self.k8s_headers)
 
 
 class K8SAgent(HttpLocust):
