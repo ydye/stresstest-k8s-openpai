@@ -4,5 +4,4 @@ master-url: x.x.x.x
 
 stress-test-script: xxxxx
 
-pai-user: xxxx
-pai-password: xxxxx
+pai-token: xxxxxxx
