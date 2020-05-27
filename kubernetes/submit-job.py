@@ -81,7 +81,7 @@ def main():
 
     job = os.path.expanduser(args.job)
     prefix = args.name
-    number = args.number
+    number = int(args.number)
     user = args.user
     password = args.password
     url = args.url
