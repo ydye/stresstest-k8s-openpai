@@ -48,7 +48,10 @@ job_template = read_template("/mnt/locust/test-job.yml")
 class K8SAgent(HttpUser):
     wait_time = between(60, 60)
     jobid = 0
-    userid = str(uuid.uuid4())
+    userid = None
+
+    def on_start(self):
+        self.userid = str(uuid.uuid4())
 
     @task(1)
     def submitjob(self):
