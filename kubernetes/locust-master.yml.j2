@@ -29,12 +29,14 @@ spec:
             - mountPath: /mnt/locust
               name: locust-script
           env:
-            - name: LOCUST_MODE
-              value: "master"
-            - name: LOCUSTFILE_PATH
+            - name: LOCUST_MODE_MASTER
+              value: "true"
+            - name: LOCUST_LOCUSTFILE
               value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
             - name: PAI_TOKEN
               value: "{{ env['cfg']['pai-token'] }}"
+            - name: LOCUST_HOST
+              value: "{{ env['cfg']['target-url'] }}"
             - name: TARGET_URL
               value: "{{ env['cfg']['target-url'] }}"
             - name: MY_POD_NAME

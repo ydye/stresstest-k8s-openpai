@@ -31,13 +31,15 @@ spec:
         env:
           - name: PAI_TOKEN
             value: "{{ env['cfg']['pai-token'] }}"
-          - name: LOCUST_MODE
-            value: "slave"
-          - name: LOCUSTFILE_PATH
+          - name: LOCUST_MODE_WORKER
+            value: "true"
+          - name: LOCUST_LOCUSTFILE
             value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
+          - name: LOCUST_HOST
+            value: "{{ env['cfg']['target-url'] }}"
           - name: TARGET_URL
             value: "{{ env['cfg']['target-url'] }}"
-          - name: LOCUST_MASTER_HOST
+          - name: LOCUST_MASTER_NODE_HOST
             value: "{{ env['cfg']['master-url'] }}"
           - name: MY_POD_NAME
             valueFrom:
