@@ -2,6 +2,7 @@ import os
 import requests
 import socket
 import yaml
+import uuid
 import jinja2
 from locust import HttpUser, task, between
 
@@ -43,18 +44,17 @@ k8s_headers = {
 kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME], os.environ[SERVICE_PORT_ENV_NAME]))
 pai_token = os.environ["PAI_TOKEN"]
 job_template = read_template("/mnt/locust/test-job.yml")
-id = 0
 
 class K8SAgent(HttpUser):
     wait_time = between(60, 60)
-
+    jobid = 0
+    userid = str(uuid.uuid4())
 
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
-        jobname = "stresstest-{0}-{1}".format(hostname, id)
-        id = id + 1
-
+        jobname = "stresstest-{0}-{1}-{2}".format(hostname, self.userid, self.jobid)
+        self.jobid = self.jobid + 1
         template_data = generate_from_template_dict(job_template, jobname)
 
 
