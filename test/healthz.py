@@ -3,7 +3,7 @@ import requests
 import socket
 import yaml
 import jinja2
-from locust import HttpUser, TaskSet, task, between
+from locust import HttpUser, task, between
 
 SERVICE_HOST_ENV_NAME = "KUBERNETES_SERVICE_HOST"
 SERVICE_PORT_ENV_NAME = "KUBERNETES_SERVICE_PORT"
@@ -45,7 +45,9 @@ pai_token = os.environ["PAI_TOKEN"]
 job_template = read_template("/mnt/locust/test-job.yml")
 id = 0
 
-class HealthZTask(TaskSet):
+class K8SAgent(HttpUser):
+    wait_time = between(10, 10)
+
     '''
     @task(1)
     def submitjob(self):
@@ -83,8 +85,4 @@ class HealthZTask(TaskSet):
     def getPodList(self):
         self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
     '''
-
-class K8SAgent(HttpUser):
-    task_set = HealthZTask
-    wait_time = between(10, 10)
 
