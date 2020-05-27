@@ -4,13 +4,13 @@ click==7.1.2
 ConfigArgParse==1.2.3
 Flask==1.1.2
 gevent==20.4.0
-geventhttpclient-wheels==1.3.1.dev2
+geventhttpclient-wheels==1.3.1.dev3
 greenlet==0.4.15
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
-locust==0.0
-locustio==0.14.6
+locust==1.0.2
+locustio==1.0b2
 MarkupSafe==1.1.1
 msgpack==1.0.0
 psutil==5.7.0

@@ -3,7 +3,7 @@ import requests
 import socket
 import yaml
 import jinja2
-from locust import HttpLocust, TaskSet, task, between
+from locust import HttpUser, TaskSet, task, between
 
 SERVICE_HOST_ENV_NAME = "KUBERNETES_SERVICE_HOST"
 SERVICE_PORT_ENV_NAME = "KUBERNETES_SERVICE_PORT"
@@ -84,7 +84,7 @@ class HealthZTask(TaskSet):
         self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
     '''
 
-class K8SAgent(HttpLocust):
+class K8SAgent(HttpUser):
     task_set = HealthZTask
     wait_time = between(10, 10)
 
