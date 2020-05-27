@@ -33,26 +33,19 @@ def generate_from_template_dict(template_data, jobname):
 
     return generated_file
 
+
+with open(SERVICE_TOKEN_FILENAME) as f:
+    kube_token = f.read()
+kube_cert = SERVICE_CERT_FILENAME
+k8s_headers = {
+            "Authorization": "Bearer {0}".format(kube_token)
+}
+kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME], os.environ[SERVICE_PORT_ENV_NAME]))
+pai_token = os.environ["PAI_TOKEN"]
+job_template = read_template("/mnt/locust/test-job.yml")
+id = 0
+
 class HealthZTask(TaskSet):
-    job_template = None
-    pai_token = None
-    kube_token = None
-    kube_cert = None
-    kube_url = None
-    k8s_headers = {}
-    id = 0
-
-    def on_start(self):
-        with open(SERVICE_TOKEN_FILENAME) as f:
-            self.kube_token = f.read()
-        self.kube_cert = SERVICE_CERT_FILENAME
-        self.k8s_headers = {
-            "Authorization": "Bearer {0}".format(self.kube_token)
-        }
-        self.kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME], os.environ[SERVICE_PORT_ENV_NAME]))
-        self.pai_token = os.environ["PAI_TOKEN"]
-        self.job_template = read_template("/mnt/locust/test-job.yml")
-
     '''
     @task(1)
     def submitjob(self):
@@ -78,7 +71,7 @@ class HealthZTask(TaskSet):
     @task(10)
     def listjoball(self):
         openpai_headers = {
-            "Authorization": "Bearer {0}".format(self.pai_token),
+            "Authorization": "Bearer {0}".format(pai_token),
         }
         self.client.get(
             "/rest-server/api/v2/jobs",
