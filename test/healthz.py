@@ -86,5 +86,5 @@ class HealthZTask(TaskSet):
 
 class K8SAgent(HttpLocust):
     task_set = HealthZTask
-    wait_time = between(2, 4)
+    wait_time = between(10, 10)
 
