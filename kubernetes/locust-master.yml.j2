@@ -34,7 +34,7 @@ spec:
             - name: LOCUSTFILE_PATH
               value: "/mnt/locust/{{ env['cfg']['stress-test-script'] }}"
             - name: PAI_TOKEN
-              value: "{{{{ env['cfg']['pai-token'] }}}}"
+              value: "{{ env['cfg']['pai-token'] }}"
             - name: TARGET_URL
               value: "{{ env['cfg']['target-url'] }}"
             - name: MY_POD_NAME
