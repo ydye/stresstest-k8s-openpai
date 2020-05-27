@@ -46,9 +46,9 @@ job_template = read_template("/mnt/locust/test-job.yml")
 id = 0
 
 class K8SAgent(HttpUser):
-    wait_time = between(10, 10)
+    wait_time = between(60, 60)
 
-    '''
+
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
@@ -69,7 +69,7 @@ class K8SAgent(HttpUser):
             data=template_data
         )
     
-
+    '''
     @task(10)
     def listjoball(self):
         openpai_headers = {
@@ -79,11 +79,9 @@ class K8SAgent(HttpUser):
             "/rest-server/api/v2/jobs",
             headers=openpai_headers
         )
-    '''
-
 
     @task(10)
     def getPodList(self):
         self.client.get(kube_url + "/api/v1/nodes", verify = kube_cert, headers = k8s_headers)
-
+    '''
 
