@@ -50,18 +50,7 @@ class HealthZTask(TaskSet):
             "Authorization": "Bearer {0}".format(self.kube_token)
         }
         self.kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME], os.environ[SERVICE_PORT_ENV_NAME]))
-
-        self.pai_user = os.environ['PAI_USER']
-        self.pai_password = os.environ['PAI_PASSWORD']
-        self.pai_restserver = os.environ['TARGET_URL']
-
-        payload = {
-            'username': self.pai_user,
-            'password': self.pai_password,
-        }
-        r = requests.post("{0}/rest-server/api/v2/authn/basic/login".format(self.pai_restserver), data = payload)
-        self.pai_token = r.json()['token']
-
+        self.pai_token = os.environ["PAI_TOKEN"]
         self.job_template = read_template("/mnt/locust/test-job.yml")
 
     '''

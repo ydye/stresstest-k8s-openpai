@@ -29,10 +29,8 @@ spec:
           - mountPath: /mnt/locust
             name: locust-script
         env:
-          - name: PAI_USER
-            value: "{{ env['cfg']['pai-user'] }}"
-          - name: PAI_PASSWORD
-            value: "{{ env['cfg']['pai-password'] }}"
+          - name: PAI_TOKEN
+            value: "{{{{ env['cfg']['pai-token'] }}}}"
           - name: LOCUST_MODE
             value: "slave"
           - name: LOCUSTFILE_PATH
