@@ -52,14 +52,14 @@ class K8SAgent(HttpUser):
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
-        jobname = "stresstest-{0}-{1}".format(hostname, self.id)
-        self.id = self.id + 1
+        jobname = "stresstest-{0}-{1}".format(hostname, id)
+        id = id + 1
 
-        template_data = generate_from_template_dict(self.job_template, jobname)
+        template_data = generate_from_template_dict(job_template, jobname)
 
 
         openpai_headers = {
-            "Authorization": "Bearer {0}".format(self.pai_token),
+            "Authorization": "Bearer {0}".format(pai_token),
             "Content-Type": "text/yaml"
         }
 
