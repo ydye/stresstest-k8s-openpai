@@ -68,7 +68,7 @@ class K8SAgent(HttpUser):
             headers=openpai_headers,
             data=template_data
         )
-    '''
+    
 
     @task(10)
     def listjoball(self):
@@ -79,10 +79,11 @@ class K8SAgent(HttpUser):
             "/rest-server/api/v2/jobs",
             headers=openpai_headers
         )
-
     '''
+
+
     @task(10)
     def getPodList(self):
-        self.client.get(self.kube_url + "/api/v1/nodes", verify = self.kube_cert, headers = self.k8s_headers)
-    '''
+        self.client.get(kube_url + "/api/v1/nodes", verify = kube_cert, headers = k8s_headers)
+
 
