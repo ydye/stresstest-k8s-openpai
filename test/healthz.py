@@ -53,6 +53,7 @@ class K8SAgent(HttpUser):
     def on_start(self):
         self.userid = str(uuid.uuid4())
 
+    '''
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
@@ -71,8 +72,8 @@ class K8SAgent(HttpUser):
             headers=openpai_headers,
             data=template_data
         )
-    
     '''
+
     @task(10)
     def listjoball(self):
         openpai_headers = {
@@ -83,6 +84,7 @@ class K8SAgent(HttpUser):
             headers=openpai_headers
         )
 
+    '''
     @task(10)
     def getPodList(self):
         self.client.get(kube_url + "/api/v1/nodes", verify = kube_cert, headers = k8s_headers)
