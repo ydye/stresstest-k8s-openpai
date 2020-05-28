@@ -47,7 +47,7 @@ pai_token = os.environ["PAI_TOKEN"]
 job_template = read_template("/mnt/locust/test-job.yml")
 
 class K8SAgent(FastHttpUser):
-    wait_time = between(1, 1)
+    wait_time = between(0, 0)
     jobid = 0
     userid = None
 
