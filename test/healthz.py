@@ -4,7 +4,8 @@ import socket
 import yaml
 import uuid
 import jinja2
-from locust import HttpUser, task, between
+from locust import task, between
+from locust.contrib.fasthttp import FastHttpUser
 
 SERVICE_HOST_ENV_NAME = "KUBERNETES_SERVICE_HOST"
 SERVICE_PORT_ENV_NAME = "KUBERNETES_SERVICE_PORT"
@@ -45,7 +46,7 @@ kube_url = "https://{0}".format(_join_host_port(os.environ[SERVICE_HOST_ENV_NAME
 pai_token = os.environ["PAI_TOKEN"]
 job_template = read_template("/mnt/locust/test-job.yml")
 
-class K8SAgent(HttpUser):
+class K8SAgent(FastHttpUser):
     wait_time = between(10, 10)
     jobid = 0
     userid = None
