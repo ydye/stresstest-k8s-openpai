@@ -48,14 +48,13 @@ job_template = read_template("/mnt/locust/test-job.yml")
 
 class K8SAgent(FastHttpUser):
     #wait_time = between(10, 10)
-    wait_time = constant_pacing(30)
+    wait_time = constant_pacing(60)
     jobid = 0
     userid = None
 
     def on_start(self):
         self.userid = str(uuid.uuid4())
 
-    '''
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
@@ -74,9 +73,8 @@ class K8SAgent(FastHttpUser):
             headers=openpai_headers,
             data=template_data
         )
+
     '''
-
-
     @task(10)
     def listjoball(self):
         openpai_headers = {
@@ -91,5 +89,5 @@ class K8SAgent(FastHttpUser):
     @task(10)
     def getPodList(self):
         self.client.get(kube_url + "/api/v1/pods", verify = kube_cert, headers = k8s_headers)
-
+    '''
 
