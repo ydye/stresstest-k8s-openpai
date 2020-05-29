@@ -77,7 +77,7 @@ class K8SAgent(FastHttpUser):
             headers=openpai_headers,
             data=template_data
         )
-    '''
+    
 
     @task(10)
     def listjoball(self):
@@ -88,6 +88,8 @@ class K8SAgent(FastHttpUser):
             "/rest-server/api/v2/jobs",
             headers=openpai_headers
         )
+    '''
+
 
 
     @task(10)
