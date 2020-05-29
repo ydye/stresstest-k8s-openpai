@@ -27,10 +27,13 @@ def read_template(template_path):
 
     return template_data
 
-def generate_from_template_dict(template_data, jobname):
+def generate_from_template_dict(template_data, jobname, vc):
 
     generated_file = jinja2.Template(template_data).render(
-        {'jobname': jobname}
+        {
+            'jobname': jobname,
+            'vc': vc
+        }
     )
 
     return generated_file
@@ -60,7 +63,7 @@ class K8SAgent(FastHttpUser):
         hostname = os.environ['MY_POD_NAME']
         jobname = "stresstest-{0}-{1}-{2}".format(hostname, self.userid, self.jobid)
         self.jobid = self.jobid + 1
-        template_data = generate_from_template_dict(job_template, jobname)
+        template_data = generate_from_template_dict(job_template, jobname, "stress")
 
 
         openpai_headers = {

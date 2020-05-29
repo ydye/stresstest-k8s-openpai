@@ -33,3 +33,5 @@ taskRoles:
     commands:
       # remove in the image otherwise cannot find gpu
       - sleep 60000
+defaults:
+  virtualCluster: {{vc}}

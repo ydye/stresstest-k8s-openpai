@@ -96,7 +96,8 @@ def main():
     for i in range(number):
         logger.info("Submit job {0}-{1}".format(prefix, i))
         template_data = generate_from_template_dict(job_template, {
-            "jobname": "{0}-{1}".format(prefix, i)
+            "jobname": "{0}-{1}".format(prefix, i),
+            "vc": "default"
         })
         res = requests.post("{0}/rest-server/api/v2/jobs".format(url), headers=openpai_headers, data=template_data)
         time.sleep(1)
