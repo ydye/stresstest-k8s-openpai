@@ -51,7 +51,7 @@ job_template = read_template("/mnt/locust/test-job.yml")
 
 class K8SAgent(FastHttpUser):
     #wait_time = between(10, 10)
-    wait_time = constant_pacing(60)
+    wait_time = constant_pacing(30)
     jobid = 0
     userid = None
 
