@@ -77,7 +77,7 @@ class K8SAgent(FastHttpUser):
             headers=openpai_headers,
             data=template_data
         )
-
+    '''
     @task(10)
     def listjoball(self):
         openpai_headers = {
@@ -91,4 +91,4 @@ class K8SAgent(FastHttpUser):
     @task(10)
     def getPodList(self):
         self.client.get(kube_url + "/api/v1/pods", verify = kube_cert, headers = k8s_headers)
-
+    '''
