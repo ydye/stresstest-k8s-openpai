@@ -58,6 +58,7 @@ class K8SAgent(FastHttpUser):
     def on_start(self):
         self.userid = str(uuid.uuid4())
 
+    '''
     @task(1)
     def submitjob(self):
         hostname = os.environ['MY_POD_NAME']
@@ -87,7 +88,7 @@ class K8SAgent(FastHttpUser):
             "/rest-server/api/v2/jobs",
             headers=openpai_headers
         )
-    '''
+
     '''
     @task(10)
     def getPodList(self):
