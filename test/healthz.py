@@ -55,8 +55,8 @@ class K8SAgent(FastHttpUser):
     jobid = 0
     userid = None
     max_retries = 3
-    connection_timeout = 60000
-    network_timeout = 60000
+    connection_timeout = 18000
+    network_timeout = 18000
 
     def on_start(self):
         self.userid = str(uuid.uuid4())
